@@ -1,0 +1,127 @@
+# Grom translation map for the Omarchy higher-level stack.
+# Upstream reference: https://github.com/basecamp/omarchy.
+# Latest release tag observed: v3.6.0.
+# Branch snapshot inspected: dev@1b5a57658e3818cf7773f7228e6ef492d3d5189d.
+
+upstream:
+  repository: https://github.com/basecamp/omarchy
+  latest_release_observed: v3.6.0
+  inspected_branch: dev
+  inspected_commit: 1b5a57658e3818cf7773f7228e6ef492d3d5189d
+  package_lists:
+    - install/omarchy-base.packages
+    - install/omarchy-other.packages
+  config_roots:
+    - config/hypr
+    - config/waybar
+    - config/walker
+    - config/alacritty
+    - default/hypr
+    - default/wayland-sessions
+
+grom:
+  board: grom-amd64
+  package_manager: portage
+  target_virtual: virtual/target-grom-os
+  config_package: chromeos-base/grom-omarchy-config
+  policy:
+    - Do not run pacman, yay, or Arch install scripts in the target image.
+    - Port upstream Omarchy behavior into ebuilds and files owned by this overlay.
+    - Keep BSP dependencies separate from user-facing desktop dependencies.
+
+layers:
+  compositor_session:
+    upstream_arch_packages:
+      - hyprland
+      - uwsm
+      - xdg-desktop-portal-hyprland
+      - xdg-desktop-portal-gtk
+      - qt5-wayland
+      - qt6-wayland
+    upstream_config:
+      - config/hypr/hyprland.conf
+      - default/wayland-sessions/omarchy.desktop
+    grom_status: pending-portage-port
+
+  shell_ui:
+    upstream_arch_packages:
+      - waybar
+      - walker
+      - mako
+      - swayosd
+      - hypridle
+      - hyprlock
+      - hyprpicker
+      - hyprsunset
+      - hyprland-preview-share-picker
+    upstream_config:
+      - config/waybar/config.jsonc
+      - config/walker/config.toml
+      - default/mako/core.ini
+      - config/swayosd/config.toml
+    grom_status: pending-portage-port
+
+  terminal_browser:
+    upstream_arch_packages:
+      - alacritty
+      - ghostty
+      - kitty
+      - chromium
+    upstream_config:
+      - config/alacritty/alacritty.toml
+      - config/ghostty/config
+      - config/kitty/kitty.conf
+      - config/chromium-flags.conf
+    grom_status: pending-package-selection
+
+  audio_media_capture:
+    upstream_arch_packages:
+      - pipewire
+      - pipewire-alsa
+      - pipewire-jack
+      - pipewire-pulse
+      - wireplumber
+      - pamixer
+      - playerctl
+      - grim
+      - slurp
+      - wl-clipboard
+      - imv
+      - mpv
+    chromiumos_portage_available:
+      - gui-apps/wl-clipboard
+    grom_status: partial-package-availability
+
+  cli_workflow:
+    upstream_arch_packages:
+      - bat
+      - btop
+      - eza
+      - fastfetch
+      - fd
+      - fzf
+      - github-cli
+      - jq
+      - lazygit
+      - ripgrep
+      - starship
+      - tmux
+      - zoxide
+    chromiumos_portage_available:
+      - app-misc/jq
+      - app-misc/tmux
+    grom_status: partial-package-availability
+
+  fonts_theme:
+    upstream_arch_packages:
+      - noto-fonts
+      - noto-fonts-cjk
+      - noto-fonts-emoji
+      - ttf-ia-writer
+      - ttf-jetbrains-mono-nerd
+      - woff2-font-awesome
+      - yaru-icon-theme
+    upstream_config:
+      - config/fontconfig/fonts.conf
+      - default/themed
+    grom_status: pending-font-packaging
