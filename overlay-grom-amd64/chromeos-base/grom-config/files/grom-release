@@ -1,6 +1,0 @@
-NAME=Grom
-ID=grom
-BOARD=grom-amd64
-BASE_ID=chromiumos
-VERSION_ID=0.0.1
-PRETTY_NAME="Grom 0.0.1 amd64"
